@@ -1,14 +1,14 @@
-title: "视频下载示例"
+title: "Video Download"
 nodes:
   - node_id: yt_dlp_download#1
     task: self::yt_dlp_download
     inputs_from:
       - handle: url
-        value: "https://www.youtube.com/watch?v=wjZofJX0v4M"
+        value: https://www.youtube.com/watch?v=xWYb7tImErI
       - handle: output_dir
-        value: "/oomol-driver/oomol-storage"
+        value: /oomol-driver/oomol-storage
       - handle: quality
-        value:
+        value: 1080p
       - handle: audio_only
         value: false
       - handle: format
@@ -18,4 +18,12 @@ nodes:
       - handle: subtitle_langs
         value:
       - handle: proxy
+        value:
+      - handle: hdr
+        value: true
+      - handle: high_fps
+        value: true
+      - handle: codec_preference
+        value: h265
+      - handle: bitrate_limit
         value:

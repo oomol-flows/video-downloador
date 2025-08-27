@@ -10,6 +10,10 @@ class Inputs(typing.TypedDict):
     audio_only: typing.Optional[bool]
     subtitle_langs: typing.Optional[str]
     proxy: typing.Optional[str]
+    hdr: typing.Optional[bool]
+    high_fps: typing.Optional[bool]
+    codec_preference: typing.Optional[str]
+    bitrate_limit: typing.Optional[str]
 
 class Outputs(typing.TypedDict):
     video_path: str
@@ -18,10 +22,14 @@ class Outputs(typing.TypedDict):
 # endregion
 
 import os
-import json
 import yt_dlp
 from oocana import Context
-from pathlib import Path
+
+# Import modular components
+from .utils import ensure_output_dir, find_downloaded_file
+from .formatters import get_format_string, get_optimal_format_for_hd
+from .handlers import create_progress_hook, display_video_info, prepare_video_info, display_download_info
+from .config import create_ydl_options, configure_audio_options, configure_subtitle_options, get_default_filename_template
 
 def main(params: Inputs, context: Context) -> Outputs:
     """
@@ -43,64 +51,57 @@ def main(params: Inputs, context: Context) -> Outputs:
     audio_only = params.get("audio_only", False)
     subtitle_langs = params.get("subtitle_langs")
     proxy = params.get("proxy")
+    hdr = params.get("hdr", False)
+    high_fps = params.get("high_fps", False)
+    codec_preference = params.get("codec_preference", "h264")
+    bitrate_limit = params.get("bitrate_limit")
     
     # Ensure output directory exists
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    ensure_output_dir(output_dir)
     
     # Set default filename template
     if not filename_template:
-        filename_template = "%(title)s.%(ext)s"
+        filename_template = get_default_filename_template()
     
     # Configure yt-dlp options
-    ydl_opts = {
-        'outtmpl': os.path.join(output_dir, filename_template),
-        'format': format_spec if format_spec != "best" else get_format_string(quality, audio_only),
-    }
+    format_to_use = format_spec if format_spec != "best" else get_format_string(quality, audio_only, hdr, high_fps, codec_preference, bitrate_limit)
+    ydl_opts = create_ydl_options(output_dir, filename_template, format_to_use, proxy)
     
-    # Download audio only
-    if audio_only:
-        ydl_opts['format'] = 'bestaudio/best'
-        ydl_opts['postprocessors'] = [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }]
+    # Configure audio and subtitle options
+    ydl_opts = configure_audio_options(ydl_opts, audio_only)
+    ydl_opts = configure_subtitle_options(ydl_opts, subtitle_langs)
     
-    # Subtitle download
-    if subtitle_langs:
-        ydl_opts['writesubtitles'] = True
-        ydl_opts['subtitleslangs'] = subtitle_langs.split(',')
-        ydl_opts['writeautomaticsub'] = True
-    
-    # Proxy settings
-    if proxy:
-        ydl_opts['proxy'] = proxy
-    
-    # Progress callback
-    def progress_hook(d):
-        if d['status'] == 'downloading':
-            percent = d.get('_percent_str', 'N/A')
-            speed = d.get('_speed_str', 'N/A')
-            eta = d.get('_eta_str', 'N/A')
-            print(percent)
-            context.preview({
-                'type': 'text',
-                'data': f'Download progress: {percent} Speed: {speed} ETA: {eta}'
-            })
-        elif d['status'] == 'finished':
-            context.preview({
-                'type': 'text',
-                'data': f'Download completed: {d["filename"]}'
-            })
-    
+    # Create progress hook
+    progress_hook = create_progress_hook(context)
     ydl_opts['progress_hooks'] = [progress_hook]
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            # Get video information
+            # Get video information first
+            context.preview({
+                'type': 'text',
+                'data': '🔍 Extracting video information...'
+            })
             info = ydl.extract_info(url, download=False)
             
-            # Start download
-            ydl.download([url])
+            # Display video information
+            display_video_info(info, context)
+            
+            # Try to get optimal format for HD content
+            if format_spec == "best" and quality in ['4K', '2160p', '1440p', '1080p']:
+                optimal_format = get_optimal_format_for_hd(info, quality, hdr, high_fps, codec_preference)
+                if optimal_format:
+                    ydl_opts['format'] = optimal_format
+                    context.preview({
+                        'type': 'text',
+                        'data': f'🎯 Using optimized format for {quality} quality'
+                    })
+            
+            # Display download start information
+            display_download_info(quality, hdr, high_fps, codec_preference, context)
+            
+            # Update ydl_opts with final format
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl_final:
+                ydl_final.download([url])
             
             # Get actual downloaded file path
             filename = ydl.prepare_filename(info)
@@ -109,31 +110,13 @@ def main(params: Inputs, context: Context) -> Outputs:
                 base_name = os.path.splitext(filename)[0]
                 filename = base_name + '.mp3'
             
-            # Ensure file exists
-            if not os.path.exists(filename):
-                # Try to find the actual downloaded file
-                title = info.get('title', 'video')
-                ext = 'mp3' if audio_only else info.get('ext', 'mp4')
-                filename = os.path.join(output_dir, f"{title}.{ext}")
-                
-                # If still not found, use wildcard search
-                if not os.path.exists(filename):
-                    import glob
-                    pattern = os.path.join(output_dir, f"{title}*")
-                    files = glob.glob(pattern)
-                    if files:
-                        filename = max(files, key=os.path.getctime)
+            # Find the actual downloaded file
+            title = info.get('title', 'video')
+            ext = info.get('ext', 'mp4')
+            filename = find_downloaded_file(filename, output_dir, title, audio_only, ext)
             
             # Prepare output information
-            video_info = {
-                'title': info.get('title', ''),
-                'duration': info.get('duration', 0),
-                'uploader': info.get('uploader', ''),
-                'view_count': info.get('view_count', 0),
-                'upload_date': info.get('upload_date', ''),
-                'webpage_url': info.get('webpage_url', ''),
-                'thumbnail': info.get('thumbnail', ''),
-            }
+            video_info = prepare_video_info(info)
             
             return {
                 'video_path': filename,
@@ -146,18 +129,3 @@ def main(params: Inputs, context: Context) -> Outputs:
             'data': f'Download failed: {str(e)}'
         })
         raise Exception(f"Video download failed: {str(e)}")
-
-def get_format_string(quality: str, audio_only: bool) -> str:
-    """Return the corresponding format string based on quality requirements"""
-    if audio_only:
-        return 'bestaudio/best'
-    
-    quality_map = {
-        'best': 'best',
-        '1080p': 'best[height<=1080]',
-        '720p': 'best[height<=720]',
-        '480p': 'best[height<=480]',
-        '360p': 'best[height<=360]',
-    }
-    
-    return quality_map.get(quality, 'best')

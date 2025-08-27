@@ -43,6 +43,9 @@ inputs_def:
       type: string
       enum:
         - best
+        - 4K
+        - 2160p
+        - 1440p
         - 1080p
         - 720p
         - 480p
@@ -72,6 +75,39 @@ inputs_def:
 
   - handle: proxy
     description: "Proxy address (e.g. http://127.0.0.1:1080)"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: hdr
+    description: "Download HDR video if available"
+    json_schema:
+      type: boolean
+    value: false
+    nullable: true
+
+  - handle: high_fps
+    description: "Download high frame rate video (>=50fps) if available"
+    json_schema:
+      type: boolean
+    value: false
+    nullable: true
+
+  - handle: codec_preference
+    description: "Preferred video codec"
+    json_schema:
+      type: string
+      enum:
+        - h264
+        - h265
+        - av1
+        - vp9
+    value: h264
+    nullable: true
+
+  - handle: bitrate_limit
+    description: "Maximum bitrate limit (e.g. 5000k, 10m)"
     json_schema:
       type: string
     value:
