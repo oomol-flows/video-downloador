@@ -5,3 +5,9 @@ scripts:
   bootstrap: |
     npm install
     poetry install --no-root
+name: video-downloador
+displayName: Video Downloador
+description: Video Downloador
+releaseNotes: Video Downloador
+repository: https://github.com/oomol-flows/video-downloador.git
+icon: ./icon.png

@@ -8,7 +8,7 @@ nodes:
       - handle: output_dir
         value: /oomol-driver/oomol-storage
       - handle: quality
-        value: 1080p
+        value: best
       - handle: audio_only
         value: false
       - handle: format
