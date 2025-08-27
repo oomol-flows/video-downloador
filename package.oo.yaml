@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: poetry add pandas
@@ -8,6 +8,6 @@ scripts:
 name: video-downloador
 displayName: Video Downloador
 description: Video Downloador
-releaseNotes: Video Downloador
+releaseNotes: update
 repository: https://github.com/oomol-flows/video-downloador.git
 icon: ./icon.png
