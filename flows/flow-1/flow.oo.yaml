@@ -1,0 +1,21 @@
+title: "视频下载示例"
+nodes:
+  - node_id: yt_dlp_download#1
+    task: self::yt_dlp_download
+    inputs_from:
+      - handle: url
+        value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      - handle: output_dir
+        value: "/oomol-driver/oomol-storage/downloads"
+      - handle: quality
+        value: "720p"
+      - handle: audio_only
+        value: false
+      - handle: format
+        value: best
+      - handle: filename_template
+        value:
+      - handle: subtitle_langs
+        value:
+      - handle: proxy
+        value:
