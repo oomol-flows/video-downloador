@@ -25,39 +25,39 @@ from pathlib import Path
 
 def main(params: Inputs, context: Context) -> Outputs:
     """
-    使用 yt-dlp 下载视频
+    Download videos using yt-dlp
     
     Args:
-        params: 输入参数
-        context: OOMOL 上下文
+        params: Input parameters
+        context: OOMOL context
         
     Returns:
-        包含视频路径和信息的字典
+        Dictionary containing video path and information
     """
     
     url = params["url"]
-    output_dir = params.get("output_dir", "/oomol-driver/oomol-storage/downloads")
+    output_dir = params.get("output_dir")
     format_spec = params.get("format", "best")
-    filename_template = params.get("filename_template", "%(title)s.%(ext)s")
+    filename_template = params.get("filename_template")
     quality = params.get("quality", "best")
     audio_only = params.get("audio_only", False)
     subtitle_langs = params.get("subtitle_langs")
     proxy = params.get("proxy")
     
-    # 确保输出目录存在
+    # Ensure output directory exists
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     
-    # 设置默认文件名模板
+    # Set default filename template
     if not filename_template:
         filename_template = "%(title)s.%(ext)s"
     
-    # 配置 yt-dlp 选项
+    # Configure yt-dlp options
     ydl_opts = {
         'outtmpl': os.path.join(output_dir, filename_template),
         'format': format_spec if format_spec != "best" else get_format_string(quality, audio_only),
     }
     
-    # 仅下载音频
+    # Download audio only
     if audio_only:
         ydl_opts['format'] = 'bestaudio/best'
         ydl_opts['postprocessors'] = [{
@@ -66,57 +66,57 @@ def main(params: Inputs, context: Context) -> Outputs:
             'preferredquality': '192',
         }]
     
-    # 字幕下载
+    # Subtitle download
     if subtitle_langs:
         ydl_opts['writesubtitles'] = True
         ydl_opts['subtitleslangs'] = subtitle_langs.split(',')
         ydl_opts['writeautomaticsub'] = True
     
-    # 代理设置
+    # Proxy settings
     if proxy:
         ydl_opts['proxy'] = proxy
     
-    # 进度回调
+    # Progress callback
     def progress_hook(d):
         if d['status'] == 'downloading':
             percent = d.get('_percent_str', 'N/A')
             speed = d.get('_speed_str', 'N/A')
             eta = d.get('_eta_str', 'N/A')
+            print(percent)
             context.preview({
                 'type': 'text',
-                'data': f'下载进度: {percent} 速度: {speed} 剩余时间: {eta}'
+                'data': f'Download progress: {percent} Speed: {speed} ETA: {eta}'
             })
         elif d['status'] == 'finished':
             context.preview({
                 'type': 'text',
-                'data': f'下载完成: {d["filename"]}'
+                'data': f'Download completed: {d["filename"]}'
             })
     
     ydl_opts['progress_hooks'] = [progress_hook]
-    
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            # 获取视频信息
+            # Get video information
             info = ydl.extract_info(url, download=False)
             
-            # 开始下载
+            # Start download
             ydl.download([url])
             
-            # 获取实际下载的文件路径
+            # Get actual downloaded file path
             filename = ydl.prepare_filename(info)
             if audio_only:
-                # 如果是音频，扩展名会变成 .mp3
+                # If audio only, extension will become .mp3
                 base_name = os.path.splitext(filename)[0]
                 filename = base_name + '.mp3'
             
-            # 确保文件存在
+            # Ensure file exists
             if not os.path.exists(filename):
-                # 尝试查找实际下载的文件
+                # Try to find the actual downloaded file
                 title = info.get('title', 'video')
                 ext = 'mp3' if audio_only else info.get('ext', 'mp4')
                 filename = os.path.join(output_dir, f"{title}.{ext}")
                 
-                # 如果还是找不到，使用通配符搜索
+                # If still not found, use wildcard search
                 if not os.path.exists(filename):
                     import glob
                     pattern = os.path.join(output_dir, f"{title}*")
@@ -124,7 +124,7 @@ def main(params: Inputs, context: Context) -> Outputs:
                     if files:
                         filename = max(files, key=os.path.getctime)
             
-            # 准备输出信息
+            # Prepare output information
             video_info = {
                 'title': info.get('title', ''),
                 'duration': info.get('duration', 0),
@@ -143,12 +143,12 @@ def main(params: Inputs, context: Context) -> Outputs:
     except Exception as e:
         context.preview({
             'type': 'text',
-            'data': f'下载失败: {str(e)}'
+            'data': f'Download failed: {str(e)}'
         })
-        raise Exception(f"视频下载失败: {str(e)}")
+        raise Exception(f"Video download failed: {str(e)}")
 
 def get_format_string(quality: str, audio_only: bool) -> str:
-    """根据质量要求返回对应的格式字符串"""
+    """Return the corresponding format string based on quality requirements"""
     if audio_only:
         return 'bestaudio/best'
     

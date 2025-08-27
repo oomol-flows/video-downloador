@@ -4,15 +4,15 @@ nodes:
     task: self::yt_dlp_download
     inputs_from:
       - handle: url
-        value: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        value: "https://www.youtube.com/watch?v=wjZofJX0v4M"
       - handle: output_dir
-        value: "/oomol-driver/oomol-storage/downloads"
+        value: "/oomol-driver/oomol-storage"
       - handle: quality
-        value: "720p"
+        value:
       - handle: audio_only
         value: false
       - handle: format
-        value: best
+        value:
       - handle: filename_template
         value:
       - handle: subtitle_langs

@@ -1,70 +1,90 @@
-title: "视频下载"
-description: "使用 yt-dlp 从各大视频网站下载视频"
-icon: ":carbon:download"
+title: "Video Download"
+description: "Download videos from major video websites using yt-dlp"
+icon: ":carbon:download:"
 
 inputs_def:
   - handle: url
-    description: "视频URL"
+    description: "Video URL"
     json_schema:
       type: string
     nullable: false
-  
-  - handle: format
-    description: "下载格式 (best/bestvideo+bestaudio/mp4/webm等)"
-    json_schema:
-      type: string
-    value: "best"
-    nullable: true
-  
+
   - handle: output_dir
-    description: "输出目录"
+    description: "Output directory"
     json_schema:
       type: string
       ui:widget: dir
-    value: "/oomol-driver/oomol-storage/downloads"
+    nullable: false
+
+  - handle: format
+    description: "Download format"
+    json_schema:
+      type: string
+      enum:
+        - best
+        - bestvideo+bestaudio
+        - mp4
+        - webm
+        - mkv
+        - flv
+    value: best
     nullable: true
-  
+
   - handle: filename_template
-    description: "文件名模板 (%(title)s.%(ext)s)"
+    description: "Filename template"
     json_schema:
       type: string
-    value: "%(title)s.%(ext)s"
+    value:
     nullable: true
-  
+
   - handle: quality
-    description: "视频质量 (best/1080p/720p/480p/360p)"
+    description: "Video quality"
     json_schema:
       type: string
-    value: "best"
+      enum:
+        - best
+        - 1080p
+        - 720p
+        - 480p
+        - 360p
+        - 240p
+    value: best
     nullable: true
-  
+
   - handle: audio_only
-    description: "仅下载音频"
+    description: "Audio only"
     json_schema:
       type: boolean
     value: false
     nullable: true
-  
+
   - handle: subtitle_langs
-    description: "字幕语言代码 (如 zh-CN,en)"
+    description: "Subtitle language codes (e.g. zh-CN,en)"
     json_schema:
       type: string
+      enum:
+        - "en"
+        - "zh-CN"
+        - "ja"
+        - "fr"
+    value:
     nullable: true
-  
+
   - handle: proxy
-    description: "代理地址 (如 http://127.0.0.1:1080)"
+    description: "Proxy address (e.g. http://127.0.0.1:1080)"
     json_schema:
       type: string
+    value:
     nullable: true
 
 outputs_def:
   - handle: video_path
-    description: "下载的视频文件路径"
+    description: "Downloaded video file path"
     json_schema:
       type: string
-  
+
   - handle: info
-    description: "视频信息"
+    description: "Video information"
     json_schema:
       type: object
       properties:
