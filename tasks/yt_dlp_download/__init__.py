@@ -14,6 +14,7 @@ class Inputs(typing.TypedDict):
     high_fps: typing.Optional[bool]
     codec_preference: typing.Optional[str]
     bitrate_limit: typing.Optional[str]
+    cookies_file: typing.Optional[str]
 
 class Outputs(typing.TypedDict):
     video_path: str
@@ -55,6 +56,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     high_fps = params.get("high_fps", False)
     codec_preference = params.get("codec_preference", "h264")
     bitrate_limit = params.get("bitrate_limit")
+    cookies_file = params.get("cookies_file")
     
     # Ensure output directory exists
     ensure_output_dir(output_dir)
@@ -65,7 +67,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     
     # Configure yt-dlp options
     format_to_use = format_spec if format_spec != "best" else get_format_string(quality, audio_only, hdr, high_fps, codec_preference, bitrate_limit)
-    ydl_opts = create_ydl_options(output_dir, filename_template, format_to_use, proxy)
+    ydl_opts = create_ydl_options(output_dir, filename_template, format_to_use, proxy, cookies_file)
     
     # Configure audio and subtitle options
     ydl_opts = configure_audio_options(ydl_opts, audio_only)
@@ -76,6 +78,19 @@ def main(params: Inputs, context: Context) -> Outputs:
     ydl_opts['progress_hooks'] = [progress_hook]
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            # Display cookie status
+            if cookies_file:
+                if os.path.isfile(cookies_file):
+                    context.preview({
+                        'type': 'text',
+                        'data': f'🍪 Using cookies from: {cookies_file}'
+                    })
+                else:
+                    context.preview({
+                        'type': 'text',
+                        'data': f'⚠️ Cookie file not found: {cookies_file}'
+                    })
+            
             # Get video information first
             context.preview({
                 'type': 'text',

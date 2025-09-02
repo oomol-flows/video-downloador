@@ -113,6 +113,23 @@ inputs_def:
     value:
     nullable: true
 
+  - handle: cookies_file
+    description: "Cookie file path for authentication"
+    json_schema:
+      type: string
+      ui:widget: file
+      ui:options:
+        filters:
+          - name: Cookie Files
+            extensions:
+              - txt
+              - cookies
+          - name: All Files
+            extensions:
+              - "*"
+    value:
+    nullable: true
+
 outputs_def:
   - handle: video_path
     description: "Downloaded video file path"

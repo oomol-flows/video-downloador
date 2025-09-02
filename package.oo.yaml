@@ -7,7 +7,8 @@ scripts:
     poetry install --no-root
 name: video-downloador
 displayName: Video Downloador
-description: Video Downloador
+description: "A simple and user-friendly tool for downloading YouTube videos to
+  your computer. Save your favorite "
 releaseNotes: update
 repository: https://github.com/oomol-flows/video-downloador.git
 icon: ./icon.png

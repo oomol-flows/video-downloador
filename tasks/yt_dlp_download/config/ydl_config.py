@@ -4,7 +4,7 @@ import os
 from typing import Dict, Any, Optional
 
 
-def create_ydl_options(output_dir: str, filename_template: str, format_spec: str, proxy: Optional[str] = None) -> Dict[str, Any]:
+def create_ydl_options(output_dir: str, filename_template: str, format_spec: str, proxy: Optional[str] = None, cookies_file: Optional[str] = None) -> Dict[str, Any]:
     """Create base yt-dlp options"""
     ydl_opts = {
         'outtmpl': os.path.join(output_dir, filename_template),
@@ -24,6 +24,10 @@ def create_ydl_options(output_dir: str, filename_template: str, format_spec: str
     # Proxy settings
     if proxy:
         ydl_opts['proxy'] = proxy
+    
+    # Cookie settings
+    if cookies_file and os.path.isfile(cookies_file):
+        ydl_opts['cookiefile'] = cookies_file
     
     return ydl_opts
 
