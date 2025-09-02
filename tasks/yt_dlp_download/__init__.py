@@ -81,21 +81,12 @@ def main(params: Inputs, context: Context) -> Outputs:
             # Display cookie status
             if cookies_file:
                 if os.path.isfile(cookies_file):
-                    context.preview({
-                        'type': 'text',
-                        'data': f'🍪 Using cookies from: {cookies_file}'
-                    })
+                    print(f'🍪 Using cookies from: {cookies_file}')
                 else:
-                    context.preview({
-                        'type': 'text',
-                        'data': f'⚠️ Cookie file not found: {cookies_file}'
-                    })
+                    print(f'⚠️ Cookie file not found: {cookies_file}')
             
             # Get video information first
-            context.preview({
-                'type': 'text',
-                'data': '🔍 Extracting video information...'
-            })
+            print('🔍 Extracting video information...')
             info = ydl.extract_info(url, download=False)
             
             # Display video information
@@ -106,10 +97,7 @@ def main(params: Inputs, context: Context) -> Outputs:
                 optimal_format = get_optimal_format_for_hd(info, quality, hdr, high_fps, codec_preference)
                 if optimal_format:
                     ydl_opts['format'] = optimal_format
-                    context.preview({
-                        'type': 'text',
-                        'data': f'🎯 Using optimized format for {quality} quality'
-                    })
+                    print(f'🎯 Using optimized format for {quality} quality')
             
             # Display download start information
             display_download_info(quality, hdr, high_fps, codec_preference, context)
@@ -139,8 +127,5 @@ def main(params: Inputs, context: Context) -> Outputs:
             }
             
     except Exception as e:
-        context.preview({
-            'type': 'text',
-            'data': f'Download failed: {str(e)}'
-        })
+        print(f'Download failed: {str(e)}')
         raise Exception(f"Video download failed: {str(e)}")

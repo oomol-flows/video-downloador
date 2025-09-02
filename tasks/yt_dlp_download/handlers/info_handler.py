@@ -16,10 +16,7 @@ def display_video_info(info: dict, context: Context) -> None:
     duration_str = format_duration(duration)
     view_str = format_view_count(view_count)
     
-    context.preview({
-        'type': 'text',
-        'data': f'📺 Title: {title}\n👤 Uploader: {uploader}\n⏱️ Duration: {duration_str}\n👁️ Views: {view_str}'
-    })
+    print(f'📺 Title: {title}\n👤 Uploader: {uploader}\n⏱️ Duration: {duration_str}\n👁️ Views: {view_str}')
     
     # Analyze and display available formats
     formats = info.get('formats', [])
@@ -28,10 +25,7 @@ def display_video_info(info: dict, context: Context) -> None:
     features = get_format_features_info(available_qualities, hdr_available, high_fps_available)
     
     if features:
-        context.preview({
-            'type': 'text',
-            'data': f'🎬 {" | ".join(features)}'
-        })
+        print(f'🎬 {" | ".join(features)}')
 
 
 def prepare_video_info(info: dict) -> dict:
@@ -56,7 +50,4 @@ def display_download_info(quality: str, hdr: bool, high_fps: bool, codec_prefere
         download_info += ' (High FPS)'
     download_info += f'\n🎥 Codec: {codec_preference.upper()}'
     
-    context.preview({
-        'type': 'text',
-        'data': download_info
-    })
+    print(download_info)
