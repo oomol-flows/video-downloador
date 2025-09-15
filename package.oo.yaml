@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: poetry add pandas
@@ -7,9 +7,8 @@ scripts:
     poetry install --no-root
     apt update && apt install ffmpeg -y
 name: video-downloador
-displayName: Video Downloador
-description: "A simple and user-friendly tool for downloading YouTube videos to
-  your computer. Save your favorite "
+displayName: "%video-downloador%"
+description: "%video-downloador-is-a-powerful-yet-easy-to-use-application-that%"
 repository: https://github.com/oomol-flows/video-downloador.git
 icon: ./icon.png
 releaseNotes: add ffmpeg

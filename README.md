@@ -1,102 +1,118 @@
-# YouTube Video Downloader
+# Video Downloador
 
-A simple and user-friendly tool for downloading YouTube videos to your computer. Save your favorite videos for offline viewing without needing technical knowledge.
+A simple and user-friendly tool for downloading videos from YouTube and other major video platforms to your computer. Save your favorite videos with just a few clicks!
 
-## What This Tool Does
+## What is Video Downloador?
 
-- **Download YouTube videos** in various quality options (720p, 1080p, 4K when available)
-- **Save videos** to your computer in MP4 format
-- **Download audio only** if you just want the music or podcast
-- **Choose video quality** based on your needs and storage space
-- **Batch download** multiple videos at once
+Video Downloador is a powerful yet easy-to-use application that lets you download videos from popular websites like YouTube. Whether you want to save educational content, music videos, or entertainment for offline viewing, this tool makes it simple and straightforward.
 
-## Getting Started
+## Key Features
 
-### For Windows Users
-1. Download the latest version from the [Releases](https://github.com/username/video-downloador/releases) page
-2. Double-click `YouTubeDownloader.exe` to run
-3. No installation required - it's ready to use immediately
+### **Video Download Block**
+The main component that handles all video downloading tasks with comprehensive options:
 
-### For Mac Users
-1. Download the latest version from the [Releases](https://github.com/username/video-downloador/releases) page
-2. Double-click `YouTubeDownloader.app` to run
-3. If you see a security warning, right-click and select "Open" to bypass
+- **Easy URL Input**: Simply paste any video URL from supported platforms
+- **Quality Selection**: Choose from multiple quality options (4K, 1080p, 720p, 480p, etc.)
+- **Format Options**: Download in various formats (MP4, WebM, MKV, FLV)
+- **Audio-Only Mode**: Extract just the audio from videos
+- **Subtitle Support**: Download videos with subtitles in multiple languages
+- **HDR & High FPS**: Support for high-quality HDR and 60fps+ videos
+- **Smart Codec Selection**: Choose preferred video codecs (H.264, H.265, AV1, VP9)
+- **Bandwidth Control**: Set maximum bitrate limits for downloads
+- **Custom Naming**: Use custom filename templates for organized downloads
+- **Proxy Support**: Download through proxy servers if needed
+- **Cookie Authentication**: Access private or age-restricted content with cookie files
 
-### For Linux Users
-1. Download the latest version from the [Releases](https://github.com/username/video-downloador/releases) page
-2. Extract the downloaded file
-3. Double-click the `YouTubeDownloader` file to run
+## Who Should Use This?
 
-## How to Use
+- **Students & Educators**: Download educational videos for offline study
+- **Content Creators**: Archive inspiration or reference materials
+- **Music Lovers**: Save favorite music videos and performances
+- **Travelers**: Download content before trips with limited internet
+- **Anyone**: Who wants to keep important videos safe on their device
 
-1. **Copy the YouTube URL** from your browser's address bar
-2. **Paste the URL** into the downloader's input field
-3. **Select quality** - choose from available options (higher quality = larger file)
-4. **Click "Download"** and choose where to save the video
-5. **Wait for completion** - progress will be shown in real-time
+## Usage Scenarios
 
-## Features
+### **Educational Content**
+- Download lecture videos for offline study
+- Save tutorial content for later reference
+- Archive important educational materials
 
-### Video Quality Options
-- **Best Quality**: Highest available (up to 4K)
-- **Good Quality**: 1080p HD - great balance of quality and file size
-- **Standard Quality**: 720p - smaller files, good for mobile devices
-- **Audio Only**: Just the audio track (MP3 format)
+### **Entertainment & Music**
+- Download music videos and concerts
+- Save comedy shows and entertainment content
+- Archive favorite performances
 
-### Batch Downloading
-- Add multiple YouTube URLs at once
-- Download entire playlists (up to 50 videos at a time)
-- Queue system processes videos one by one
+### **Professional Use**
+- Download reference materials for projects
+- Archive webinars and training videos
+- Save promotional or marketing content
 
-### Smart Features
-- **Auto-detect** available video qualities for each URL
-- **Resume downloads** if your connection drops
-- **Skip existing files** to avoid duplicates
-- **Simple progress tracking** with time remaining
+### **Content Archival**
+- Backup important videos that might be removed
+- Create local libraries of valuable content
+- Preserve content for future access
 
-## Common Use Cases
+## How It Works
 
-- **Travel**: Download videos before flights or road trips
-- **Offline Learning**: Save educational content for areas with poor internet
-- **Music Collection**: Extract audio from music videos and concerts
-- **Content Creation**: Download reference videos for your own projects
-- **Archiving**: Save important videos before they're removed from YouTube
+1. **Input Video URL**: Paste the link to the video you want to download
+2. **Choose Destination**: Select where to save the downloaded video
+3. **Configure Options**: Set quality, format, and other preferences
+4. **Start Download**: Click to begin the download process
+5. **Enjoy Offline**: Access your downloaded video anytime, anywhere
 
-## Troubleshooting
+## Configuration Options
 
-### "Download Failed" Error
-- Check your internet connection
-- Try a different video quality
-- Ensure you have enough storage space
-- The video might be age-restricted or private
+### **Basic Settings**
+- **Video URL**: The web address of the video to download
+- **Output Directory**: Where to save downloaded files
+- **Quality**: Video resolution (Best, 4K, 1080p, 720p, etc.)
+- **Format**: File format for the download
 
-### App Won't Start (Mac)
-- Right-click the app and select "Open" to bypass security warning
-- Go to System Preferences > Security & Privacy > Allow apps from anywhere
+### **Advanced Options**
+- **Audio Only**: Download just the audio track
+- **Subtitles**: Include subtitle files in selected languages
+- **HDR Support**: Enable high dynamic range video downloading
+- **High Frame Rate**: Download 60fps+ videos when available
+- **Codec Preference**: Choose specific video compression standards
+- **Bitrate Limit**: Control maximum download quality/size
+- **Custom Naming**: Set custom filename patterns
+- **Proxy Settings**: Use proxy servers for downloading
+- **Cookie Files**: Authenticate with platforms using cookie files
 
-### Slow Downloads
-- Try downloading during off-peak hours
-- Lower the video quality for faster downloads
-- Check if other apps are using your internet connection
+## Privacy & Safety
+
+- **Local Processing**: All downloads happen on your device
+- **No Data Collection**: Your download history stays private
+- **Secure Downloads**: Safe and virus-free video downloading
+- **Respect Terms**: Always follow platform terms of service
 
 ## Tips for Best Results
 
-- **Higher quality = larger files**: A 1080p video is typically 3-4 times larger than 720p
-- **Audio-only downloads** are much faster and smaller than video downloads
-- **Long videos** (1+ hours) may take significant time and storage space
-- **Check available storage** before downloading large files
+1. **Use Best Quality**: Select "best" for automatic optimal quality
+2. **Check Storage**: Ensure enough disk space for downloads
+3. **Stable Internet**: Use reliable internet connection for large files
+4. **Format Compatibility**: Choose MP4 for widest device compatibility
+5. **Organize Downloads**: Use custom output directories to stay organized
 
-## Legal Notice
+## Technical Requirements
 
-This tool is for downloading videos you have permission to download. Please respect YouTube's terms of service and copyright laws. Only download videos for personal use or when you have explicit permission from the content creator.
+- **Internet Connection**: Required for downloading videos
+- **Storage Space**: Varies based on video quality and length
+- **Supported Platforms**: YouTube and other major video sites
+- **File Formats**: MP4, WebM, MKV, FLV, and audio formats
 
-## Support
+## Support & Help
 
-If you encounter issues or have questions:
-1. Check the troubleshooting section above
-2. Visit our [Issues page](https://github.com/username/video-downloador/issues) for common solutions
-3. Create a new issue if your problem isn't listed
+If you encounter any issues or need assistance:
+- Check your internet connection
+- Verify the video URL is correct and accessible
+- Ensure sufficient storage space
+- Try different quality settings if downloads fail
 
-## Updates
+---
 
-The app will notify you when new versions are available. Updates include new features, bug fixes, and compatibility improvements with YouTube's changes.
+**Note**: This tool is designed for personal use and downloading content you have rights to access. Please respect copyright laws and platform terms of service when using this application.
+
+**Version**: 0.0.6
+**Repository**: [GitHub - Video Downloador](https://github.com/oomol-flows/video-downloador.git)
