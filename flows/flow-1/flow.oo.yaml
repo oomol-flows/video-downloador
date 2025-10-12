@@ -20,9 +20,9 @@ nodes:
       - handle: proxy
         value:
       - handle: hdr
-        value: false
+        value: true
       - handle: high_fps
-        value: false
+        value: true
       - handle: codec_preference
         value: h265
       - handle: bitrate_limit

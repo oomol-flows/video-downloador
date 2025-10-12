@@ -48,6 +48,7 @@ def display_download_info(quality: str, hdr: bool, high_fps: bool, codec_prefere
         download_info += ' (HDR)'
     if high_fps:
         download_info += ' (High FPS)'
-    download_info += f'\n🎥 Codec: {codec_preference.upper()}'
-    
+    if codec_preference:
+        download_info += f'\n🎥 Codec: {codec_preference.upper()}'
+
     print(download_info)

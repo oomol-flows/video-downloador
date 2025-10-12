@@ -84,14 +84,14 @@ inputs_def:
     description: "Download HDR video if available"
     json_schema:
       type: boolean
-    value: false
+    value: true
     nullable: true
 
   - handle: high_fps
     description: "Download high frame rate video (>=50fps) if available"
     json_schema:
       type: boolean
-    value: false
+    value: true
     nullable: true
 
   - handle: codec_preference
@@ -103,7 +103,7 @@ inputs_def:
         - h265
         - av1
         - vp9
-    value: null
+    value:
     nullable: true
 
   - handle: bitrate_limit
