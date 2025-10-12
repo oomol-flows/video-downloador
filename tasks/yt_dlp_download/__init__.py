@@ -54,7 +54,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     proxy = params.get("proxy")
     hdr = params.get("hdr", False)
     high_fps = params.get("high_fps", False)
-    codec_preference = params.get("codec_preference", "h264")
+    codec_preference = params.get("codec_preference")
     bitrate_limit = params.get("bitrate_limit")
     cookies_file = params.get("cookies_file")
     
@@ -127,5 +127,35 @@ def main(params: Inputs, context: Context) -> Outputs:
             }
             
     except Exception as e:
-        print(f'Download failed: {str(e)}')
-        raise Exception(f"Video download failed: {str(e)}")
+        error_msg = str(e)
+        print(f'❌ Download failed: {error_msg}')
+
+        # Provide helpful error messages for common issues
+        if '403' in error_msg or 'Forbidden' in error_msg:
+            print('\n💡 Troubleshooting tips for 403 Forbidden error:')
+            print('━' * 60)
+            print('This error means the server is refusing to serve the video.')
+            print('\n🔍 Common causes:')
+            print('   • Geographic restrictions (content blocked in your region)')
+            print('   • Login required (video is private or members-only)')
+            print('   • Rate limiting (too many requests)')
+            print('   • Bot detection (website blocking automated downloads)')
+            print('\n✅ Solutions to try:')
+            print('   1. Use cookies file (if you can watch in browser)')
+            print('   2. Use a proxy/VPN (if geo-blocked)')
+            print('   3. Wait a few minutes (if rate-limited)')
+            print('   4. Update yt-dlp (poetry update yt-dlp)')
+            print('\n📝 How to export cookies:')
+            print('   • Install "Get cookies.txt LOCALLY" browser extension')
+            print('   • Visit the video website and login if needed')
+            print('   • Click the extension and export cookies')
+            print('   • Save as cookies.txt and provide the file path')
+            print('\n🔗 Video URL: ' + url)
+            print('━' * 60)
+            raise ValueError("403 Forbidden: Video requires authentication or is geo-restricted. Use cookies/proxy to access.")
+        elif '404' in error_msg:
+            raise ValueError(f"Video not found (404). Please check if the URL is correct and the video still exists.")
+        elif 'Unable to extract' in error_msg or 'Unsupported URL' in error_msg:
+            raise ValueError(f"Unable to extract video information. The URL might not be supported or the video is private.")
+        else:
+            raise ValueError(f"Video download failed: {error_msg}")

@@ -4,81 +4,96 @@ import re
 from typing import Optional
 
 
-def get_format_string(quality: str, audio_only: bool, hdr: bool = False, high_fps: bool = False, codec_preference: str = "h264", bitrate_limit: str = None) -> str:
+def get_format_string(quality: str, audio_only: bool, hdr: bool = False, high_fps: bool = False, codec_preference: Optional[str] = None, bitrate_limit: Optional[str] = None) -> str:
     """Return the corresponding format string based on quality requirements"""
     if audio_only:
         return 'bestaudio[ext=m4a]/bestaudio/best'
-    
+
     # Build format filters
     filters = []
-    
-    # Quality filters
-    if quality == '4K' or quality == '2160p':
-        filters.append('height<=2160')
-    elif quality == '1440p':
-        filters.append('height<=1440')
-    elif quality == '1080p':
-        filters.append('height<=1080')
-    elif quality == '720p':
-        filters.append('height<=720')
-    elif quality == '480p':
-        filters.append('height<=480')
-    elif quality == '360p':
-        filters.append('height<=360')
-    elif quality == '240p':
-        filters.append('height<=240')
-    
+
+    # Quality filters - only add limit if not 'best'
+    if quality != 'best':
+        if quality == '4K' or quality == '2160p':
+            filters.append('height<=2160')
+        elif quality == '1440p':
+            filters.append('height<=1440')
+        elif quality == '1080p':
+            filters.append('height<=1080')
+        elif quality == '720p':
+            filters.append('height<=720')
+        elif quality == '480p':
+            filters.append('height<=480')
+        elif quality == '360p':
+            filters.append('height<=360')
+        elif quality == '240p':
+            filters.append('height<=240')
+
     # HDR support
     if hdr:
         filters.append('dynamic_range=HDR10')
-    
+
     # High frame rate support
     if high_fps:
         filters.append('fps>=50')
-    
-    # Codec preference
-    if codec_preference == 'h265':
-        filters.append('vcodec~="^((he|h\.?265|av01))')
-    elif codec_preference == 'av1':
-        filters.append('vcodec~="^av01"')
-    elif codec_preference == 'vp9':
-        filters.append('vcodec~="^vp9"')
-    else:  # h264 default
-        filters.append('vcodec~="^((avc|h\.?264))"')
+
+    # Codec preference - only add if explicitly specified
+    # None means no codec restriction (best quality)
+    if codec_preference:
+        if codec_preference == 'h264':
+            filters.append('vcodec~="^((avc|h\\.?264))"')
+        elif codec_preference == 'h265':
+            filters.append('vcodec~="^((he|h\\.?265|av01))"')
+        elif codec_preference == 'av1':
+            filters.append('vcodec~="^av01"')
+        elif codec_preference == 'vp9':
+            filters.append('vcodec~="^vp9"')
     
     # Bitrate limit
     if bitrate_limit:
         try:
-            bitrate_val = int(bitrate_limit.replace('k', '').replace('K', '').replace('m', '000').replace('M', '000'))
+            # Parse bitrate limit properly (e.g., "5000k" -> 5000, "10m" -> 10000)
+            bitrate_str = bitrate_limit.strip().lower()
+            if bitrate_str.endswith('m'):
+                bitrate_val = int(float(bitrate_str[:-1]) * 1000)
+            elif bitrate_str.endswith('k'):
+                bitrate_val = int(bitrate_str[:-1])
+            else:
+                bitrate_val = int(bitrate_str)
             filters.append(f'tbr<={bitrate_val}')
-        except ValueError:
+        except (ValueError, IndexError):
             pass  # Invalid bitrate format, ignore
     
     # Construct format string
     if filters:
         filter_str = '[' + ']['.join(filters) + ']'
-        if quality == 'best':
-            return f'bestvideo{filter_str}+bestaudio/best{filter_str}/best'
-        else:
-            return f'bestvideo{filter_str}+bestaudio/best{filter_str}/best'
-    else:
-        if quality == 'best':
-            return 'bestvideo+bestaudio/best'
-        else:
-            quality_map = {
-                '4K': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]',
-                '2160p': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]',
-                '1440p': 'bestvideo[height<=1440]+bestaudio/best[height<=1440]',
-                '1080p': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
-                '720p': 'bestvideo[height<=720]+bestaudio/best[height<=720]',
-                '480p': 'bestvideo[height<=480]+bestaudio/best[height<=480]',
-                '360p': 'bestvideo[height<=360]+bestaudio/best[height<=360]',
-                '240p': 'bestvideo[height<=240]+bestaudio/best[height<=240]',
-            }
-            return quality_map.get(quality, 'bestvideo+bestaudio/best')
+        # Only apply filters to video, not to fallback options
+        return f'bestvideo{filter_str}+bestaudio/best'
+
+    # Simple quality-based format selection
+    if quality == 'best':
+        return 'bestvideo+bestaudio/best'
+
+    # Map quality to height constraint
+    quality_map = {
+        '4K': 2160,
+        '2160p': 2160,
+        '1440p': 1440,
+        '1080p': 1080,
+        '720p': 720,
+        '480p': 480,
+        '360p': 360,
+        '240p': 240,
+    }
+
+    height = quality_map.get(quality)
+    if height:
+        return f'bestvideo[height<={height}]+bestaudio/best[height<={height}]'
+
+    return 'bestvideo+bestaudio/best'
 
 
-def get_optimal_format_for_hd(info: dict, quality: str, hdr: bool = False, high_fps: bool = False, codec_preference: str = "h264") -> Optional[str]:
+def get_optimal_format_for_hd(info: dict, quality: str, hdr: bool = False, high_fps: bool = False, codec_preference: Optional[str] = None) -> Optional[str]:
     """Get optimal format string based on available formats for HD video"""
     formats = info.get('formats', [])
     
@@ -109,15 +124,16 @@ def get_optimal_format_for_hd(info: dict, quality: str, hdr: bool = False, high_
         if high_fps and fps < 50:
             continue
         
-        # Check codec preference
-        if codec_preference == 'h265' and not re.search(r'(hevc|h265|x265)', vcodec, re.I):
-            continue
-        elif codec_preference == 'av1' and not re.search(r'av01', vcodec, re.I):
-            continue
-        elif codec_preference == 'vp9' and not re.search(r'vp9', vcodec, re.I):
-            continue
-        elif codec_preference == 'h264' and not re.search(r'(avc|h264|x264)', vcodec, re.I):
-            continue
+        # Check codec preference - only if explicitly specified
+        if codec_preference:
+            if codec_preference == 'h265' and not re.search(r'(hevc|h265|x265)', vcodec, re.I):
+                continue
+            elif codec_preference == 'av1' and not re.search(r'av01', vcodec, re.I):
+                continue
+            elif codec_preference == 'vp9' and not re.search(r'vp9', vcodec, re.I):
+                continue
+            elif codec_preference == 'h264' and not re.search(r'(avc|h264|x264)', vcodec, re.I):
+                continue
         
         suitable_formats.append(fmt)
     

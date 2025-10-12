@@ -8,6 +8,15 @@
           "y": 0
         }
       }
+    },
+    "video_preview#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 745.5,
+          "y": 513
+        }
+      }
     }
   }
 }

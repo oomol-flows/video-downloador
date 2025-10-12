@@ -20,12 +20,20 @@ nodes:
       - handle: proxy
         value:
       - handle: hdr
-        value: true
+        value: false
       - handle: high_fps
-        value: true
+        value: false
       - handle: codec_preference
         value: h265
       - handle: bitrate_limit
         value:
       - handle: cookies_file
-        value:
+        value: /oomol-driver/oomol-storage/youtube.com_cookies.txt
+  - node_id: video_preview#1
+    title: "Video preview #1"
+    inputs_from:
+      - handle: video_path
+        from_node:
+          - node_id: yt_dlp_download#1
+            output_handle: video_path
+    task: oomol-preview::video_preview

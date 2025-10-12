@@ -95,7 +95,7 @@ inputs_def:
     nullable: true
 
   - handle: codec_preference
-    description: "Preferred video codec"
+    description: "Preferred video codec (leave empty for best quality)"
     json_schema:
       type: string
       enum:
@@ -103,7 +103,7 @@ inputs_def:
         - h265
         - av1
         - vp9
-    value: h264
+    value: null
     nullable: true
 
   - handle: bitrate_limit
