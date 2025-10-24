@@ -1,4 +1,4 @@
-title: "Video Download"
+title: "%video-download%"
 nodes:
   - node_id: yt_dlp_download#1
     task: self::yt_dlp_download
@@ -28,9 +28,9 @@ nodes:
       - handle: bitrate_limit
         value:
       - handle: cookies_file
-        value: /oomol-driver/oomol-storage/youtube.com_cookies.txt
+        value:
   - node_id: video_preview#1
-    title: "Video preview #1"
+    title: "%video-preview-1%"
     inputs_from:
       - handle: video_path
         from_node:

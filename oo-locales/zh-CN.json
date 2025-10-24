@@ -1,4 +1,21 @@
 {
   "video-downloador": "视频下载器",
-  "video-downloador-is-a-powerful-yet-easy-to-use-application-that": "Video Downloador 是一款功能强大且易于使用的应用程序，可让您从 YouTube 等热门网站下载视频。无论您是想保存教育内容、音乐视频，还是离线观看娱乐节目，这款工具都能让操作变得简单直观。"
+  "video-downloador-is-a-powerful-yet-easy-to-use-application-that": "Video Downloador 是一款功能强大且易于使用的应用程序，可让您从 YouTube 等热门网站下载视频。无论您是想保存教育内容、音乐视频，还是离线观看娱乐节目，这款工具都能让操作变得简单直观。",
+  "video-download": "视频 下载",
+  "video-preview-1": "视频预览 #1",
+  "video-download2": "视频下载",
+  "download-videos-from-major-video-websites-using-yt-dlp": "使用 yt-dlp 从主要视频网站下载视频",
+  "video-url-to-download": "要下载的视频 URL",
+  "directory-to-save-downloaded-video": "用于保存已下载视频的目录",
+  "download-audio-only": "仅下载音频",
+  "video-quality-resolution": "视频质量（分辨率）",
+  "download-format": "下载格式",
+  "download-hdr-video-if-available": "如有提供，请下载 HDR 视频",
+  "download-high-frame-rate-video-50fps-if-available": "如有可用，请下载高帧率视频（≥ 50 fps）。",
+  "preferred-video-codec-leave-empty-for-best-quality": "首选视频编解码器（留空以获得最佳质量）",
+  "maximum-bitrate-limit-e-g-5000k-10m": "最大码率限制（例如 5000k、10m）",
+  "custom-filename-template-e-g-title-s-ext-s": "自定义文件名模板（例如 %(title)s.%(ext)s）",
+  "subtitle-languages-to-download": "可下载的字幕语言",
+  "proxy-address-e-g-http-127-0-0-1-1080": "代理地址（例如：http://127.0.0.1:1080）",
+  "cookie-file-path-for-authentication": "用于身份验证的 Cookie 文件路径"
 }

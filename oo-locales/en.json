@@ -1,4 +1,21 @@
 {
   "video-downloador-is-a-powerful-yet-easy-to-use-application-that": "Video Downloador is a powerful yet easy-to-use application that lets you download videos from popular websites like YouTube. Whether you want to save educational content, music videos, or entertainment for offline viewing, this tool makes it simple and straightforward.",
-  "video-downloador": "Video Downloador"
+  "video-downloador": "Video Downloador",
+  "video-download": "Video Download",
+  "video-preview-1": "Video preview #1",
+  "video-download2": "Video Download",
+  "download-videos-from-major-video-websites-using-yt-dlp": "Download videos from major video websites using yt-dlp",
+  "video-url-to-download": "Video URL to download",
+  "directory-to-save-downloaded-video": "Directory to save downloaded video",
+  "download-audio-only": "Download audio only",
+  "video-quality-resolution": "Video quality (resolution)",
+  "download-format": "Download format",
+  "download-hdr-video-if-available": "Download HDR video if available",
+  "download-high-frame-rate-video-50fps-if-available": "Download high frame rate video (>=50fps) if available",
+  "preferred-video-codec-leave-empty-for-best-quality": "Preferred video codec (leave empty for best quality)",
+  "maximum-bitrate-limit-e-g-5000k-10m": "Maximum bitrate limit (e.g. 5000k, 10m)",
+  "custom-filename-template-e-g-title-s-ext-s": "Custom filename template (e.g. %(title)s.%(ext)s)",
+  "subtitle-languages-to-download": "Subtitle languages to download",
+  "proxy-address-e-g-http-127-0-0-1-1080": "Proxy address (e.g. http://127.0.0.1:1080)",
+  "cookie-file-path-for-authentication": "Cookie file path for authentication"
 }
