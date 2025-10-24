@@ -17,5 +17,20 @@
   "custom-filename-template-e-g-title-s-ext-s": "自定义文件名模板（例如 %(title)s.%(ext)s）",
   "subtitle-languages-to-download": "可下载的字幕语言",
   "proxy-address-e-g-http-127-0-0-1-1080": "代理地址（例如：http://127.0.0.1:1080）",
-  "cookie-file-path-for-authentication": "用于身份验证的 Cookie 文件路径"
+  "cookie-file-path-for-authentication": "用于身份验证的 Cookie 文件路径",
+  "video-download3": "视频下载",
+  "download-videos-from-major-video-websites-using-yt-dlp2": "使用 yt-dlp 从主流视频网站下载视频",
+  "video-url": "视频链接",
+  "output-directory": "输出目录",
+  "download-format2": "下载格式",
+  "filename-template": "文件名模板",
+  "video-quality": "视频质量",
+  "audio-only": "仅音频",
+  "subtitle-language-codes-e-g-zh-cn-en": "字幕语言代码（例如 zh-CN, en）",
+  "proxy-address-e-g-http-127-0-0-1-10802": "代理地址（例如：http://127.0.0.1:1080）",
+  "download-hdr-video-if-available2": "如果有可用，下载 HDR 视频",
+  "download-high-frame-rate-video-50fps-if-available2": "如果可用，下载高帧率视频（≥ 50 帧 / 秒）。",
+  "preferred-video-codec-leave-empty-for-best-quality2": "首选视频编解码器（如需最佳质量请留空）",
+  "maximum-bitrate-limit-e-g-5000k-10m2": "最大码率限制（例如 5000k，10m）",
+  "cookie-file-path-for-authentication2": "用于认证的 Cookie 文件路径"
 }

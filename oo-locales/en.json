@@ -17,5 +17,20 @@
   "custom-filename-template-e-g-title-s-ext-s": "Custom filename template (e.g. %(title)s.%(ext)s)",
   "subtitle-languages-to-download": "Subtitle languages to download",
   "proxy-address-e-g-http-127-0-0-1-1080": "Proxy address (e.g. http://127.0.0.1:1080)",
-  "cookie-file-path-for-authentication": "Cookie file path for authentication"
+  "cookie-file-path-for-authentication": "Cookie file path for authentication",
+  "video-download3": "Video Download",
+  "download-videos-from-major-video-websites-using-yt-dlp2": "Download videos from major video websites using yt-dlp",
+  "video-url": "Video URL",
+  "output-directory": "Output directory",
+  "download-format2": "Download format",
+  "filename-template": "Filename template",
+  "video-quality": "Video quality",
+  "audio-only": "Audio only",
+  "subtitle-language-codes-e-g-zh-cn-en": "Subtitle language codes (e.g. zh-CN,en)",
+  "proxy-address-e-g-http-127-0-0-1-10802": "Proxy address (e.g. http://127.0.0.1:1080)",
+  "download-hdr-video-if-available2": "Download HDR video if available",
+  "download-high-frame-rate-video-50fps-if-available2": "Download high frame rate video (>=50fps) if available",
+  "preferred-video-codec-leave-empty-for-best-quality2": "Preferred video codec (leave empty for best quality)",
+  "maximum-bitrate-limit-e-g-5000k-10m2": "Maximum bitrate limit (e.g. 5000k, 10m)",
+  "cookie-file-path-for-authentication2": "Cookie file path for authentication"
 }

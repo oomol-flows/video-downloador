@@ -1,23 +1,23 @@
-title: "Video Download"
-description: "Download videos from major video websites using yt-dlp"
+title: "%video-download3%"
+description: "%download-videos-from-major-video-websites-using-yt-dlp2%"
 icon: ":carbon:download:"
 
 inputs_def:
   - handle: url
-    description: "Video URL"
+    description: "%video-url%"
     json_schema:
       type: string
     nullable: false
 
   - handle: output_dir
-    description: "Output directory"
+    description: "%output-directory%"
     json_schema:
       type: string
       ui:widget: dir
     nullable: false
 
   - handle: format
-    description: "Download format"
+    description: "%download-format2%"
     json_schema:
       type: string
       enum:
@@ -31,14 +31,14 @@ inputs_def:
     nullable: true
 
   - handle: filename_template
-    description: "Filename template"
+    description: "%filename-template%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: quality
-    description: "Video quality"
+    description: "%video-quality%"
     json_schema:
       type: string
       enum:
@@ -55,14 +55,14 @@ inputs_def:
     nullable: true
 
   - handle: audio_only
-    description: "Audio only"
+    description: "%audio-only%"
     json_schema:
       type: boolean
     value: false
     nullable: true
 
   - handle: subtitle_langs
-    description: "Subtitle language codes (e.g. zh-CN,en)"
+    description: "%subtitle-language-codes-e-g-zh-cn-en%"
     json_schema:
       type: string
       enum:
@@ -74,28 +74,28 @@ inputs_def:
     nullable: true
 
   - handle: proxy
-    description: "Proxy address (e.g. http://127.0.0.1:1080)"
+    description: "%proxy-address-e-g-http-127-0-0-1-10802%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: hdr
-    description: "Download HDR video if available"
+    description: "%download-hdr-video-if-available2%"
     json_schema:
       type: boolean
     value: true
     nullable: true
 
   - handle: high_fps
-    description: "Download high frame rate video (>=50fps) if available"
+    description: "%download-high-frame-rate-video-50fps-if-available2%"
     json_schema:
       type: boolean
     value: true
     nullable: true
 
   - handle: codec_preference
-    description: "Preferred video codec (leave empty for best quality)"
+    description: "%preferred-video-codec-leave-empty-for-best-quality2%"
     json_schema:
       type: string
       enum:
@@ -107,14 +107,14 @@ inputs_def:
     nullable: true
 
   - handle: bitrate_limit
-    description: "Maximum bitrate limit (e.g. 5000k, 10m)"
+    description: "%maximum-bitrate-limit-e-g-5000k-10m2%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: cookies_file
-    description: "Cookie file path for authentication"
+    description: "%cookie-file-path-for-authentication2%"
     json_schema:
       type: string
       ui:widget: file
