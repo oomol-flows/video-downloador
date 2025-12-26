@@ -14,8 +14,11 @@ inputs_def:
     json_schema:
       type: string
       ui:widget: dir
-    nullable: false
+    value: null
+    nullable: true
 
+  - group: Quality Settings
+    collapsed: true
   - handle: format
     description: "%download-format2%"
     json_schema:
@@ -28,13 +31,6 @@ inputs_def:
         - mkv
         - flv
     value: best
-    nullable: true
-
-  - handle: filename_template
-    description: "%filename-template%"
-    json_schema:
-      type: string
-    value:
     nullable: true
 
   - handle: quality
@@ -61,6 +57,15 @@ inputs_def:
     value: false
     nullable: true
 
+  - group: Advanced Options
+    collapsed: true
+  - handle: filename_template
+    description: "%filename-template%"
+    json_schema:
+      type: string
+    value: null
+    nullable: true
+
   - handle: subtitle_langs
     description: "%subtitle-language-codes-e-g-zh-cn-en%"
     json_schema:
@@ -70,14 +75,14 @@ inputs_def:
         - "zh-CN"
         - "ja"
         - "fr"
-    value:
+    value: null
     nullable: true
 
   - handle: proxy
     description: "%proxy-address-e-g-http-127-0-0-1-10802%"
     json_schema:
       type: string
-    value:
+    value: null
     nullable: true
 
   - handle: hdr
@@ -103,14 +108,14 @@ inputs_def:
         - h265
         - av1
         - vp9
-    value:
+    value: null
     nullable: true
 
   - handle: bitrate_limit
     description: "%maximum-bitrate-limit-e-g-5000k-10m2%"
     json_schema:
       type: string
-    value:
+    value: null
     nullable: true
 
   - handle: cookies_file
@@ -127,7 +132,7 @@ inputs_def:
           - name: All Files
             extensions:
               - "*"
-    value:
+    value: null
     nullable: true
 
 outputs_def:
@@ -135,6 +140,7 @@ outputs_def:
     description: "Downloaded video file path"
     json_schema:
       type: string
+      ui:widget: file
 
   - handle: info
     description: "Video information"

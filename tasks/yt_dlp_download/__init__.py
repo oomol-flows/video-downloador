@@ -45,7 +45,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     """
     
     url = params["url"]
-    output_dir = params.get("output_dir")
+    output_dir = params.get("output_dir") or context.session_dir
     format_spec = params.get("format", "best")
     filename_template = params.get("filename_template")
     quality = params.get("quality", "best")
