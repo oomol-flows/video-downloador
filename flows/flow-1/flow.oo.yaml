@@ -6,7 +6,7 @@ nodes:
       - handle: url
         value: https://www.youtube.com/watch?v=xWYb7tImErI
       - handle: output_dir
-        value: /oomol-driver/oomol-storage
+        value:
       - handle: quality
         value: best
       - handle: audio_only

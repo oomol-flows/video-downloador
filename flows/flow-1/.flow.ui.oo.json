@@ -7,6 +7,21 @@
           "x": 0,
           "y": 0
         }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "Advanced Options": true,
+            "Quality Settings": true
+          }
+        },
+        "outputs": {
+          "collapsed": {
+            "info": {
+              "[]": true
+            }
+          }
+        }
       }
     },
     "video_preview#1": {
